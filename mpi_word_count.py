@@ -1,7 +1,6 @@
 from mpi4py import MPI
 import more_itertools
 from timeit import default_timer as timer
-import itertools 
 
 # The comm object we use to get information about the processes/nodes
 comm = MPI.COMM_WORLD
@@ -20,8 +19,8 @@ def wordcount(data):
 
 # Chunking function (borrowed from StackOverflow, OK?!)
 # Used to divide book into n chunks, where n = number of nodes executing
-def chunkIt(seq, num):
-  avg = len(seq) / float(num)
+def chunkIt(seq, n):
+  avg = len(seq) / float(n)
   out = []
   last = 0.0
 
@@ -55,7 +54,7 @@ if rank == 0:
 # Once the data we need is ready to distribute, we use MPI to do it
 
 # Master node is rank 0 by default
-# Only Master node has the data, so there is no Fault Tolerance here
+# Only Master node has the complete  data
 if rank == 0:
     data = chunks
 else:
@@ -95,5 +94,3 @@ if rank == 0:
 
 	# Close file stream
 	writtenfile.close()
-
-
