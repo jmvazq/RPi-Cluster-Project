@@ -1,5 +1,4 @@
 from mpi4py import MPI
-import more_itertools
 from timeit import default_timer as timer
 
 # The comm object we use to get information about the processes/nodes
