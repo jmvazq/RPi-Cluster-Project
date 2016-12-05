@@ -19,15 +19,15 @@ def wordcount(data):
 # Chunking function (borrowed from StackOverflow, OK?!)
 # Used to divide book into n chunks, where n = number of nodes executing
 def chunkIt(seq, n):
-  avg = len(seq) / float(n)
-  out = []
-  last = 0.0
+	avg = len(seq) / float(n)
+	out = []
+	last = 0.0
 
-  while last < len(seq):
-    out.append(seq[int(last):int(last + avg)])
-    last += avg
+	while last < len(seq):
+		out.append(seq[int(last):int(last + avg)])
+		last += avg
 
-  return out
+	return out
 
 # Prepare our Word Count data chunks
 text = {}
@@ -55,12 +55,13 @@ if rank == 0:
 # Master node is rank 0 by default
 # Only Master node has the complete  data
 if rank == 0:
-    data = chunks
+	data = chunks
 else:
-    data = None
+	data = None
 
-# Start tracking time
-start = timer()
+if rank == 0:
+	# Start tracking time
+	start = timer()
 
 # The data we scattered (distributed) to each node
 scattered = comm.scatter(data, root=0)
